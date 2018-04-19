@@ -1,2 +1,2 @@
 
-algo_graph_rds_lib:		Logic: DFS		|		O(V+E)
+algo_graph_roads_libraries:		Logic: DFS		|		O(V+E)
