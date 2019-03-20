@@ -1,1 +1,3 @@
-algo_graph_roads_libraries:		Logic: DFS		|		O(V+E)
+
+merge_sort		n*log(n)								
+quick_sort		n*log(n) to n^2			Best Case (pivot is median): n*log(n)					Worst Case (pivot is the largest/smallest): n + n-1 + … = n^2
