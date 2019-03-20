@@ -1,2 +1,2 @@
 # hackerrank
-Some solutions for hackerank
+Some solutions to hackerank problems
