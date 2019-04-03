@@ -1,54 +1,52 @@
 # merge sort
 
-def merge (ls, ls1, ls2):
 
-	idx1 = 0
-	idx2 = 0
-	n = len(ls)
+
+def merge(ls1, ls2):
 	n1 = len(ls1)
 	n2 = len(ls2)
-
-	for i in range(n):
-
-		if idx1 < n1 and idx2 < n2:
-			if ls1[idx1] < ls2[idx2]:
-				ls[i] = ls1[idx1]
-				idx1 +=1
-			else:
-				ls[i] = ls2[idx2]
-				idx2 +=1
-
-		elif idx1 == n1:
-			ls[i:n] = ls2[idx2:n2]
-			break
-
-		elif idx2 == n2:
-			ls[i:n] = ls1[idx1:n1]
-			break
-
-def merge_sort(ls):
-
-	if len(ls) > 2:
-
-		n = len(ls)
-
-		ls1 = ls[0:int(n/2)]
-		ls2 = ls[int(n/2):n]
-
-		merge_sort(ls1)
-		merge_sort(ls2)
-		merge(ls,ls1,ls2)
+	ls_temp2 = []
+	i = 0
+	j = 0
+	while i != n1 or j != n2:
+		if i < n1 and j < n2:
+			if ls1[i] < ls2[j] or ls1[i] == ls2[j]:
+				ls_temp2.append(ls1[i])
+				i += 1
+			elif ls1[i] > ls2[j]:
+				ls_temp2.append(ls2[j])
+				j += 1
+		elif i == n1 and j < n2:
+			ls_temp2 += ls2[j:n2]
+			j = n2
+		elif j == n2 and i < n1:
+			ls_temp2 += ls1[i:n1]
+			i = n1
+	return ls_temp2
 
 
-	elif len(ls) == 2 and ls[0] > ls[1]:
+def sort(ls_temp):
+	if len(ls_temp) > 2:
+		n = len(ls_temp)
+		ls_temp1 = sort(ls_temp[0:n//2])
+		ls_temp2 = sort(ls_temp[n//2:n])
+		ls_temp = merge(ls_temp1, ls_temp2)
+	elif len(ls_temp) == 2:
+		if ls_temp[0] > ls_temp[1]:
+			ls_temp[0],  ls_temp[1] = ls_temp[1],  ls_temp[0]
+	return ls_temp
 
-		ls[0], ls[1] = ls[1], ls[0]
 
 ''' Main Starts '''
 
-ls = []
+x = list(open('sort_case.txt','r'))
+n = len(x)
+x = [ int(x[i].replace('\n','')) for i in range(n)]
 
-for i in range(n):
-	ls.append(int(input()))
 
-merge_sort(ls)
+ls = x.copy()
+
+
+ls = sort(ls)
+x.sort()
+print (ls == x)
