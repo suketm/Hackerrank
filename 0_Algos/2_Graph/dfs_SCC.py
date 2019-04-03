@@ -1,41 +1,45 @@
 
 ''' dfs with topological order '''
 
-def reverse(ls,ls2,n):
-	for i in range(n):
-		for j in ls[i]:
-			ls2[j].append(i)
 
-def dfs (ls,que,stat,vertex):
-	stat[vertex] = 1
-	que.insert(0,vertex)
-	for new_vertex in ls[vertex]:
-		if stat[new_vertex] == 0:
-			dfs(ls,que,stat,new_vertex)
+def dfs(v, ls_temp):
+	status[v] = 1
+	d = [v]
+	for new_vertex in ls_temp[v]:
+		if status[new_vertex] == 0:
+			d += dfs(new_vertex,ls_temp)
+	return d
 
-# Main starts...
-n = 5
-ls = [[] for i in range(n)]		# graph
+def rev_graph(n):
+	ls_rev = {new_vertex:[] for new_vertex in range(n)}
+	for v in ls:
+		for new_vertex in ls[v]:
+			if v not in ls_rev[new_vertex]:
+				ls_rev[new_vertex] += [v]
+	return ls_rev
+
+n = 8
+ls = {}
+scc = []
+
+ls[0] = [1]
+ls[1] = [2]
+ls[2] = [0,3]
+ls[3] = [5,6]
+ls[4] = [3]
+ls[5] = [4]
+ls[6] = [7]
+ls[7] = []
+
+t1 = []
 status = [0]*n
-queue = []
-ls2 = [[] for i in range(n)]		# graph
+for v in range(n):
+	if status[v] == 0:
+		t1 += dfs(v,ls)
 
-# graph(ls) , function: to input graph. In this case, we will do it manually.
-ls[0].append(2)
-ls[0].append(3)
-ls[1].append(0)
-ls[2].append(1)
-ls[3].append(4)
+ls_rev = rev_graph(n)
 
-for vertex in range(n):
-	if status[vertex] == 0:
-		dfs(ls,queue,status,vertex)
-
-reverse(ls,ls2,n)
-status2 = [0]*n
-while queue != []:
-	vertex = queue.pop()
-	scc = []
-	if status2[vertex] == 0:
-		dfs(ls2,scc,status2,vertex)
-		print scc
+status = [0]*n
+for v in t1:
+	if status[v] == 0:
+		scc.append(dfs(v,ls_rev))
