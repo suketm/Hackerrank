@@ -2,31 +2,27 @@
 ''' dfs with topological order '''
 
 
-def dfs_top_order(ls,vertex,status,stack):
-	
-	status[vertex] = 1
-	for new_vertex in ls[vertex]:
+
+def dfs(v):
+	status[v] = 1
+	for new_vertex in ls[v]:
 		if status[new_vertex] == 0:
-			dfs_top_order(ls,new_vertex,status,stack)
-	stack.insert(0,vertex)
+			dfs(new_vertex)
+	order.insert(0,v)
 
 
-# Main starts... 
-n=6
-ls=[[] for i in range(n)]		# graph
-status=[0]*n
-stack=[] 
-
-# graph(ls) , function: to input graph. In this case, we will do it manually.
-ls[2].append(3)
-ls[3].append(1)
-ls[4].append(0)
-ls[4].append(1)
-ls[5].append(0)
-ls[5].append(2)
+n = 6
+order = []
+status = [0]*n
+ls = {}
+ls[0] = []
+ls[1] = []
+ls[2] = [3]
+ls[3] = [1]
+ls[4] = [0,1]
+ls[5]= [2,0]
 
 
-
-for vertex in range(n):
-	if status[vertex] == 0:
-		dfs_top_order(ls,vertex,status,stack)
+for v in [4,0,1,2,3,5]:
+	if status[v] == 0:
+		dfs(v)
