@@ -56,4 +56,4 @@ src = [starting_src]
 sptSet[starting_src] = 0
 
 shortest_path(arr,n,src,sptSet)
-print sptSet
+print (sptSet)
