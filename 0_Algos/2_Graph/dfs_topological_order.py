@@ -27,6 +27,6 @@ ls[4] = [0,1]
 ls[5]= [2,0]
 
 
-for v in [4,0,1,2,3,5]:
+for v in range(n):
 	if status[v] == 0:
 		dfs(v)
