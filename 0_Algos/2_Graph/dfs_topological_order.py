@@ -1,6 +1,8 @@
 
 ''' 
-	Topological order is a linear order of vertices such that if there's an edge (u,v), vertex u appears before v in the order. 
+	In a directed acyclic graph, topological order is defined as order, such that if any (u,v) belongs to order then vertex 
+	u must come before v.
+	NOTE: it will work only for directed acyclic graphs, not directed cyclic graph.
 '''
 
 
