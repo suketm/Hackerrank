@@ -1,6 +1,9 @@
 
 ''' dfs with topological order '''
-
+'''
+	In the mathematical theory of directed graphs, a graph is said to be strongly connected or diconnected 
+	if every vertex is reachable from every other vertex. 
+'''
 
 def dfs(v, ls_temp):
 	status[v] = 1
