@@ -1,59 +1,37 @@
 
 ''' Dijkstra's shortest path '''
-import numpy as np
-
-def min_dist(arr,n):
-
-	dist = 0
-	idx = 0
-
-	for i in range(n):
-		if arr[i] != 0:
-			idx = i
-			dist = arr[i]
-			break
-
-	for i in range(idx,n):
-		if arr[i] != 0:
-			if arr[i] < dist:
-				idx = i
-				dist = arr[i]
-
-	return idx, dist
+def update(v, nextVer, dist, n):
+	graphNew[v][nextVer] = 0
+	verList = [i for i in range(n) if (graphNew[nextVer][i] != 0 and i != v)]
+	for ver in verList:
+		if graphNew[v][ver] != 0:
+			d = min(graphNew[v][ver], dist + graphNew[nextVer][ver])
+		else:
+			d = dist + graphNew[nextVer][ver]
+		graphNew[v][ver] = d
+		graphNew[ver][v] = d
+		graphNew[ver][nextVer] = 0
 
 
-def shortest_path (arr,n,src,sptSet):
-
-	new_src, dist = min_dist(arr[0,:],n)
-	sptSet[new_src] = dist
-	src.append(new_src)
-				
-	new_node_idx = [i for i in range(1,n) if arr[new_src,i] !=0]
-		
-	for i in range(n):
-		arr[i,new_src] = 0
-
-	for new_node in new_node_idx:
-		if (arr[0,new_node] == 0) or (int(arr[0,new_node]) > dist + int(arr[new_src,new_node])):
-			arr[0,new_node] = dist + int(arr[new_src,new_node])
-
-	if len(src) != n :
-		shortest_path(arr,n,src,sptSet)
-
-# Main starts... 
-
-n = 9 
-sptSet = ['']*n
-starting_src = 0		#keep source index always 0
-
-# graph(ls) , function: to input graph. In this case, we will do it manually. Don't keep 0 distance for disconnected pt.s 
-arr = np.array(( [0, 4, 0, 0, 0, 0, 0, 8, 0],[4, 0, 8, 0, 0, 0, 0, 11, 0],[0, 8, 0, 7, 0, 4, 0, 0, 2], \
-				[0, 0, 7, 0, 9, 14, 0, 0, 0], [0, 0, 0, 9, 0, 10, 0, 0, 0], [0, 0, 4, 14, 10, 0, 2, 0, 0], \
-				[0, 0, 0, 0, 0, 2, 0, 1, 6], [8, 11, 0, 0, 0, 0, 1, 0, 7], [0, 0, 2, 0, 0, 0, 6, 7, 0] ))
+def dist(v,n):
+	
+	
+	while sum(graphNew[v]) != 0:
+		verList = graphNew[v]
+		next_verD = [d for d in verList if d != 0]
+		d = min (next_verD)
+		next_ver = verList.index(d)
+		distance[next_ver] = d
+		update(v,next_ver,d,n)
 
 
-src = [starting_src]
-sptSet[starting_src] = 0
+''' Main '''
+n = 9
+graph =	[[0, 4, 0, 0, 0, 0, 0, 8, 0], [4, 0, 8, 0, 0, 0, 0, 11, 0], [0, 8, 0, 7, 0, 4, 0, 0, 2], [0, 0, 7, 0, 9, 14, 0, 0, 0], \
+	[0, 0, 0, 9, 0, 10, 0, 0, 0], [0, 0, 4, 14, 10, 0, 2, 0, 0], [0, 0, 0, 0, 0, 2, 0, 1, 6], [8, 11, 0, 0, 0, 0, 1, 0, 7],\
+	[0, 0, 2, 0, 0, 0, 6, 7, 0]]
 
-shortest_path(arr,n,src,sptSet)
-print (sptSet)
+source = 0
+graphNew = graph.copy()
+distance = ['' if i != 0 else 0 for i in range(n)]
+dist(0,n)
