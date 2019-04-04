@@ -1,5 +1,7 @@
 
-''' dfs with topological order '''
+''' 
+	Topological order is a linear order of vertices such that if there's an edge (u,v), vertex u appears before v in the order. 
+'''
 
 
 
