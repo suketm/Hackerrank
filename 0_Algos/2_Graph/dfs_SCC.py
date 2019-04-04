@@ -1,8 +1,8 @@
-
-''' dfs with topological order '''
 '''
-	In the mathematical theory of directed graphs, a graph is said to be strongly connected or diconnected 
-	if every vertex is reachable from every other vertex. 
+	A directed graph is called strongly connected if there is a path in each direction between each pair of vertices 
+	of the graph. That is, a path exists from the first vertex in the pair to the second, and another path exists from 
+	the second vertex to the first. In a directed graph G that may not itself be strongly connected, a pair of vertices
+	u and v are said to be strongly connected to each other if there is a path in each direction between them.
 '''
 
 def dfs(v, ls_temp):
